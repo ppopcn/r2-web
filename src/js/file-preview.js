@@ -11,6 +11,9 @@ class FilePreview {
   /** @type {UIManager} */
   #ui
   #currentKey = ''
+  #currentText = ''
+  #currentCopyType = /** @type {'text'|'image'|null} */ (null)
+  #currentImageUrl = ''
 
   /** @param {R2Client} r2 @param {UIManager} ui */
   constructor(r2, ui) {
@@ -26,15 +29,20 @@ class FilePreview {
   async preview(item) {
     const key = item.key
     this.#currentKey = key
+    this.#currentText = ''
+    this.#currentCopyType = null
+    this.#currentImageUrl = ''
     const dialog = /** @type {HTMLDialogElement} */ ($('#preview-dialog'))
     const body = $('#preview-body')
     const footer = $('#preview-footer')
     const filename = $('#preview-filename')
+    const copyBtn = /** @type {HTMLElement} */ ($('#preview-copy'))
 
     filename.textContent = getFileName(key)
     body.innerHTML = '<div style="color:var(--text-tertiary)">Loading...</div>'
     footer.innerHTML = ''
     footer.classList.remove('bordered')
+    copyBtn.hidden = true
     dialog.showModal()
 
     try {
@@ -53,7 +61,10 @@ class FilePreview {
 
       if (IMAGE_RE.test(key)) {
         const url = this.#r2.getPublicUrl(key) ?? (await this.#r2.getPresignedUrl(key))
+        this.#currentImageUrl = url
+        this.#currentCopyType = 'image'
         body.innerHTML = `<img src="${url}" alt="${getFileName(key)}">`
+        copyBtn.hidden = false
       } else if (VIDEO_RE.test(key)) {
         const url = this.#r2.getPublicUrl(key) ?? (await this.#r2.getPresignedUrl(key))
         body.innerHTML = `<video src="${url}" controls></video>`
@@ -63,10 +74,13 @@ class FilePreview {
       } else if (TEXT_RE.test(key)) {
         const res = await this.#r2.getObject(key)
         const text = await res.text()
+        this.#currentText = text
+        this.#currentCopyType = 'text'
         body.innerHTML = ''
         const pre = document.createElement('pre')
         pre.textContent = text
         body.appendChild(pre)
+        copyBtn.hidden = false
       } else {
         body.innerHTML = `<p style="color:var(--text-tertiary)">${t('previewNotAvailable')}</p>`
       }
@@ -93,6 +107,34 @@ class FilePreview {
         this.#ui.toast(t('networkError', { msg: err.message }), 'error')
       } else {
         this.#ui.toast(t(/** @type {any} */ (errorKey)), 'error')
+      }
+    }
+  }
+
+  async copyCurrentText() {
+    if (this.#currentCopyType === 'text' && this.#currentText) {
+      try {
+        await navigator.clipboard.writeText(this.#currentText)
+        this.#ui.toast(t('copyTextSuccess'), 'success')
+      } catch {
+        await this.#ui.prompt(t('copyTextTitle'), t('copyTextLabel'), this.#currentText)
+      }
+      return
+    }
+
+    if (this.#currentCopyType === 'image' && this.#currentImageUrl) {
+      if (!navigator.clipboard || !window.ClipboardItem) {
+        this.#ui.toast(t('copyImageNotSupported'), 'error')
+        return
+      }
+      try {
+        const res = await fetch(this.#currentImageUrl)
+        const blob = await res.blob()
+        const item = new ClipboardItem({ [blob.type || 'image/png']: blob })
+        await navigator.clipboard.write([item])
+        this.#ui.toast(t('copyImageSuccess'), 'success')
+      } catch {
+        this.#ui.toast(t('copyImageFailed'), 'error')
       }
     }
   }

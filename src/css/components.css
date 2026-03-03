@@ -107,7 +107,7 @@
 
     & input,
     & select {
-      padding: var(--sp-2) var(--sp-3);
+      padding: var(--sp-1) var(--sp-2);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       background: var(--bg-primary);
@@ -190,6 +190,67 @@
       color: var(--text-primary);
       font-family: var(--font-mono);
     }
+  }
+
+  /* File QR Dialog */
+  #file-qr-dialog .dialog-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-block: var(--sp-4);
+    gap: var(--sp-2);
+  }
+
+  #file-qr-dialog #file-qr-desc {
+    margin: 0;
+  }
+
+  #file-qr-dialog .config-transfer-qr {
+    margin: 0 auto;
+  }
+
+  #file-qr-dialog .field {
+    width: min(520px, 100%);
+  }
+
+  #file-qr-dialog #file-qr-url {
+    text-align: center;
+    font-family: var(--font-mono);
+  }
+
+  #file-qr-dialog #file-qr-copy {
+    align-self: center;
+  }
+
+  #file-qr-dialog #file-qr-filename {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+  }
+
+  .file-qr-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--sp-3);
+  }
+
+  .file-qr-filename {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    margin-top: calc(var(--sp-1) * -1);
+  }
+
+  #file-qr-url {
+    font-family: var(--font-mono);
+  }
+
+  #file-qr-copy {
+    width: auto;
+    align-self: center;
   }
 
   /* Field Label Container (label + help icon) */
@@ -662,6 +723,25 @@
       &:hover {
         transform: scale(1.02);
       }
+
+      & canvas {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .config-transfer-qr {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--sp-4);
+      background: light-dark(#ffffff, #0a0a0a);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 208px;
+      margin: 0 auto;
 
       & canvas {
         display: block;

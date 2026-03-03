@@ -230,6 +230,38 @@ class FileOperations {
     }
   }
 
+  /** @param {string} key */
+  async copyImage(key) {
+    if (!IMAGE_RE.test(key)) {
+      this.#ui.toast(t('copyImageNotSupportedType'), 'error')
+      return
+    }
+    if (!navigator.clipboard || !window.ClipboardItem) {
+      this.#ui.toast(t('copyImageNotSupported'), 'error')
+      return
+    }
+    try {
+      const url = this.#r2.getPublicUrl(key) ?? (await this.#r2.getPresignedUrl(key))
+      const res = await fetch(url)
+      const blob = await res.blob()
+      const item = new ClipboardItem({ [blob.type || 'image/png']: blob })
+      await navigator.clipboard.write([item])
+      this.#ui.toast(t('copyImageSuccess'), 'success')
+    } catch {
+      this.#ui.toast(t('copyImageFailed'), 'error')
+    }
+  }
+
+  /** @param {string} key */
+  async shareQr(key) {
+    const url = this.#r2.getPublicUrl(key)
+    if (!url) {
+      this.#ui.toast(t('shareQrNeedDomain'), 'error')
+      return
+    }
+    await this.#ui.showFileQrDialog(url, getFileName(key))
+  }
+
   /** @param {string} prefix @param {(key: string) => Promise<void>} operation @param {boolean} deleteSource */
   async #recursiveOperation(prefix, operation, deleteSource) {
     const allKeys = await this.#collectAllKeys(prefix)

@@ -1,5 +1,5 @@
 import QRCode from 'qrcode'
-import { TOAST_DURATION, THEME_KEY } from './constants.js'
+import { IMAGE_RE, TOAST_DURATION, THEME_KEY } from './constants.js'
 import { t } from './i18n.js'
 import { $, getFileName } from './utils.js'
 
@@ -159,10 +159,15 @@ class UIManager {
     const previewBtn = $('[data-action="preview"]', menu)
     const downloadBtn = $('[data-action="download"]', menu)
     const copyLinkBtn = $('#ctx-copy-link', menu)
+    const copyImageBtn = $('#ctx-copy-image', menu)
+    const copyImageSep = $('#ctx-sep-copy-image', menu)
     const fileSep = $('#ctx-sep-file', menu)
     previewBtn.hidden = isFolder
     downloadBtn.hidden = isFolder
     copyLinkBtn.hidden = isFolder
+    const showCopyImage = !isFolder && IMAGE_RE.test(key)
+    copyImageBtn.hidden = !showCopyImage
+    copyImageSep.hidden = !showCopyImage
     fileSep.hidden = isFolder
 
     menu.style.left = x + 'px'
@@ -329,6 +334,63 @@ class UIManager {
 
     $('#copy-share-url-btn').addEventListener('click', onCopy)
     $('#share-dialog-close').addEventListener('click', onClose)
+    dialog.addEventListener('click', onBackdropClick)
+    dialog.addEventListener('close', onDialogClose, { once: true })
+
+    dialog.showModal()
+  }
+
+  /** @param {string} fileUrl @param {string} fileName */
+  async showFileQrDialog(fileUrl, fileName) {
+    const dialog = /** @type {HTMLDialogElement} */ ($('#file-qr-dialog'))
+    const urlInput = /** @type {HTMLInputElement} */ ($('#file-qr-url'))
+    const qrCanvas = /** @type {HTMLCanvasElement} */ ($('#file-qr-canvas'))
+    const nameEl = $('#file-qr-filename')
+    const copyBtn = $('#file-qr-copy')
+
+    urlInput.value = fileUrl
+    nameEl.textContent = fileName
+
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+
+    try {
+      await QRCode.toCanvas(qrCanvas, fileUrl, {
+        width: 168,
+        margin: 0,
+        color: {
+          dark: isDark ? '#FFFFFF' : '#000000',
+          light: isDark ? '#0a0a0a' : '#ffffff',
+        },
+        errorCorrectionLevel: 'M',
+      })
+    } catch (err) {
+      console.error('Failed to generate QR code:', err)
+    }
+
+    const onCopy = async () => {
+      try {
+        await navigator.clipboard.writeText(fileUrl)
+        this.toast(t('linkCopied'), 'success')
+      } catch {
+        urlInput.select()
+      }
+    }
+
+    const onClose = () => dialog.close()
+
+    /** @param {Event} e */
+    const onBackdropClick = e => {
+      if (e.target === dialog) dialog.close()
+    }
+
+    const onDialogClose = () => {
+      $('#file-qr-close').removeEventListener('click', onClose)
+      copyBtn.removeEventListener('click', onCopy)
+      dialog.removeEventListener('click', onBackdropClick)
+    }
+
+    copyBtn.addEventListener('click', onCopy)
+    $('#file-qr-close').addEventListener('click', onClose)
     dialog.addEventListener('click', onBackdropClick)
     dialog.addEventListener('close', onDialogClose, { once: true })
 

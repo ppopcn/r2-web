@@ -219,7 +219,9 @@ class App {
     $('[data-action="copyUrl"] span').textContent = t('copyUrl')
     $('[data-action="copyMarkdown"] span').textContent = t('copyMarkdown')
     $('[data-action="copyHtml"] span').textContent = t('copyHtml')
+    $('[data-action="copyImage"] span').textContent = t('copyImage')
     $('[data-action="copyPresigned"] span').textContent = t('copyPresigned')
+    $('[data-action="shareQr"] span').textContent = t('shareQr')
     $('[data-action="rename"] span').textContent = t('rename')
     $('[data-action="copy"] span').textContent = t('copy')
     $('[data-action="move"] span').textContent = t('move')
@@ -229,8 +231,10 @@ class App {
     $('#settings-btn').dataset.tooltip = t('settings')
     $('#logout-btn').dataset.tooltip = t('logout')
     $('#refresh-btn').dataset.tooltip = t('refresh')
+    $('#preview-copy').dataset.tooltip = t('copyContent')
     $('#preview-download').dataset.tooltip = t('download')
     $('#preview-close').dataset.tooltip = t('close')
+    $('#file-qr-close').dataset.tooltip = t('close')
     $('#view-grid-btn').dataset.tooltip = t('viewGrid')
     $('#view-list-btn').dataset.tooltip = t('viewList')
     $('#upload-panel-close').dataset.tooltip = t('close')
@@ -257,6 +261,10 @@ class App {
     $('#copy-share-url-text').textContent = t('copyShareUrl')
     $('#share-warning').textContent = t('shareWarning')
     $('#share-dialog-close').dataset.tooltip = t('close')
+
+    $('#file-qr-title').textContent = t('fileQrTitle')
+    $('#file-qr-desc').textContent = t('fileQrDesc')
+    $('#file-qr-copy-text').textContent = t('copyLink')
 
     this.#ui.initTooltip()
   }
@@ -629,8 +637,14 @@ class App {
         case 'copyHtml':
           /** @type {FileOperations} */ this.#ops.copyAs(key, 'html')
           break
+        case 'copyImage':
+          /** @type {FileOperations} */ this.#ops.copyImage(key)
+          break
         case 'copyPresigned':
           /** @type {FileOperations} */ this.#ops.copyAs(key, 'presigned')
+          break
+        case 'shareQr':
+          /** @type {FileOperations} */ this.#ops.shareQr(key)
           break
         case 'rename':
           /** @type {FileOperations} */ this.#ops.rename(key, isFolder)
@@ -687,6 +701,9 @@ class App {
     })
     $('#preview-download').addEventListener('click', () =>
       /** @type {FilePreview} */ (this.#preview).downloadCurrent(),
+    )
+    $('#preview-copy').addEventListener('click', () =>
+      /** @type {FilePreview} */ (this.#preview).copyCurrentText(),
     )
 
     $('#upload-panel-close').addEventListener('click', () => {
