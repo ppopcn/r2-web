@@ -132,7 +132,7 @@ const I18N = {
     refresh: '刷新',
     logout: '安全退出',
     logoutConfirmTitle: '安全退出',
-    logoutConfirmMsg: '退出后会清除浏览器中的凭据，存储桶里的文件不会受影响。确定退出吗？',
+    logoutConfirmMsg: '退出后会清除浏览器中的凭据，桶文件不受影响。确定退出吗？',
     copying: '正在复制 "{name}" 到 "{destName}"...',
     moving: '正在移动 "{name}" 到 "{destName}"...',
     deleting: '正在删除 "{name}"...',
