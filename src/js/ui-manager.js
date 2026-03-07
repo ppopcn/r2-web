@@ -1,5 +1,5 @@
 import QRCode from 'qrcode'
-import { IMAGE_RE, TOAST_DURATION, THEME_KEY } from './constants.js'
+import { IMAGE_RE, VIDEO_RE, AUDIO_RE, TOAST_DURATION, THEME_KEY } from './constants.js'
 import { t } from './i18n.js'
 import { $, extractFileName } from './utils.js'
 
@@ -160,6 +160,8 @@ class UIManager {
     const downloadBtn = $('[data-action="download"]', menu)
     const shareQrBtn = $('#ctx-share-qr', menu)
     const copyLinkBtn = $('#ctx-copy-link', menu)
+    const copyMarkdownBtn = $('#ctx-copy-markdown', menu)
+    const copyHtmlBtn = $('#ctx-copy-html', menu)
     const copyImageBtn = $('#ctx-copy-image', menu)
     const copyImageSep = $('#ctx-sep-copy-image', menu)
     const fileSep = $('#ctx-sep-file', menu)
@@ -167,9 +169,13 @@ class UIManager {
     downloadBtn.hidden = isFolder
     shareQrBtn.hidden = isFolder
     copyLinkBtn.hidden = isFolder
-    const showCopyImage = !isFolder && IMAGE_RE.test(key)
-    copyImageBtn.hidden = !showCopyImage
-    copyImageSep.hidden = !showCopyImage
+    const isImage = !isFolder && IMAGE_RE.test(key)
+    const isVideo = !isFolder && VIDEO_RE.test(key)
+    const isAudio = !isFolder && AUDIO_RE.test(key)
+    copyMarkdownBtn.hidden = !isImage
+    copyHtmlBtn.hidden = !(isImage || isVideo || isAudio)
+    copyImageBtn.hidden = !isImage
+    copyImageSep.hidden = !isImage
     fileSep.hidden = isFolder
 
     menu.style.left = x + 'px'

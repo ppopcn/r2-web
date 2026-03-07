@@ -1,4 +1,4 @@
-import { IMAGE_RE } from './constants.js'
+import { IMAGE_RE, VIDEO_RE, AUDIO_RE } from './constants.js'
 import { t } from './i18n.js'
 import { FileExplorer } from './file-explorer.js'
 import { R2Client } from './r2-client.js'
@@ -226,10 +226,22 @@ class FileOperations {
     }
   }
 
-  /** @param {string} key @param {'url'|'markdown'|'html'|'presigned'} format */
+  /** @param {string} key @param {'path'|'url'|'markdown'|'html'|'presigned'} format */
   async copyAs(key, format) {
     const name = extractFileName(key)
     const isImage = IMAGE_RE.test(key)
+    const isVideo = VIDEO_RE.test(key)
+    const isAudio = AUDIO_RE.test(key)
+
+    if (format === 'path') {
+      try {
+        await navigator.clipboard.writeText(key)
+        this.#ui.toast(t('linkCopied'), 'success')
+      } catch {
+        await this.#ui.prompt(t('copyLink'), '', key)
+      }
+      return
+    }
 
     let url
     if (format === 'presigned') {
@@ -244,7 +256,10 @@ class FileOperations {
         text = isImage ? `![${name}](${url})` : `[${name}](${url})`
         break
       case 'html':
-        text = isImage ? `<img src="${url}" alt="${name}">` : `<a href="${url}">${name}</a>`
+        if (isImage) text = `<img src="${url}" alt="${name}">`
+        else if (isVideo) text = `<video src="${url}" controls></video>`
+        else if (isAudio) text = `<audio src="${url}" controls></audio>`
+        else text = `<a href="${url}">${name}</a>`
         break
       default:
         text = url

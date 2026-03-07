@@ -216,6 +216,7 @@ class App {
     $('[data-action="preview"] span').textContent = t('preview')
     $('[data-action="download"] span').textContent = t('download')
     $('#ctx-copy-link > span').textContent = t('copyLink')
+    $('[data-action="copyPath"] span').textContent = t('copyPath')
     $('[data-action="copyUrl"] span').textContent = t('copyUrl')
     $('[data-action="copyMarkdown"] span').textContent = t('copyMarkdown')
     $('[data-action="copyHtml"] span').textContent = t('copyHtml')
@@ -629,6 +630,9 @@ class App {
           break
         case 'download':
           /** @type {FileOperations} */ this.#ops.download(key)
+          break
+        case 'copyPath':
+          /** @type {FileOperations} */ this.#ops.copyAs(key, 'path')
           break
         case 'copyUrl':
           /** @type {FileOperations} */ this.#ops.copyAs(key, 'url')
