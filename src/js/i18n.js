@@ -181,7 +181,7 @@ const I18N = {
     deleting: '正在删除 "{name}"...',
     renaming: '正在重命名 "{name}" 为 "{destName}"...',
     // Config dialog tooltips
-    tooltipAccountId: 'Cloudflare 账户 ID，在 R2 控制台右上角可找到',
+    tooltipAccountId: 'Cloudflare 账户 ID，在 R2 控制台右下角可找到',
     tooltipAccessKeyId: 'R2 API 访问密钥 ID，在 R2 设置中创建',
     tooltipSecretAccessKey: 'R2 API 密钥，仅存储在浏览器本地，不会上传到任何服务器',
     tooltipBucket: 'R2 存储桶名称，所有文件操作将在此桶下进行',
@@ -400,7 +400,7 @@ const I18N = {
     deleting: '正在刪除「{name}」…',
     renaming: '正在重命名「{name}」為「{destName}」…',
     // Config dialog tooltips
-    tooltipAccountId: 'Cloudflare 帳戶 ID，在 R2 控制台右上角可找到',
+    tooltipAccountId: 'Cloudflare 帳戶 ID，在 R2 控制台右下角可找到',
     tooltipAccessKeyId: 'R2 API 訪問金鑰 ID，在 R2 設置中創建',
     tooltipSecretAccessKey: 'R2 API 金鑰，僅儲存在瀏覽器本機，不會上傳到任何伺服器',
     tooltipBucket: 'R2 儲存桶名稱，所有檔案操作將在此桶下進行',
@@ -622,7 +622,7 @@ const I18N = {
     deleting: 'Deleting "{name}"...',
     renaming: 'Renaming "{name}" to "{destName}"...',
     // Config dialog tooltips
-    tooltipAccountId: 'Cloudflare Account ID, found in the top-right corner of R2 console',
+    tooltipAccountId: 'Cloudflare Account ID, found in the bottom-right corner of R2 console',
     tooltipAccessKeyId: 'R2 API Access Key ID, create one in R2 settings',
     tooltipSecretAccessKey: 'R2 API Secret Key, stored locally in browser only, never uploaded',
     tooltipBucket: 'R2 Bucket Name, all file operations will be performed in this bucket',
@@ -847,7 +847,7 @@ const I18N = {
     deleting: '"{name}" を削除しています...',
     renaming: '"{name}" を "{destName}" に名前変更しています...',
     // Config dialog tooltips
-    tooltipAccountId: 'Cloudflare アカウント ID、R2 コンソールの右上で確認できます',
+    tooltipAccountId: 'Cloudflare アカウント ID、R2 コンソールの右下で確認できます',
     tooltipAccessKeyId: 'R2 API アクセスキー ID、R2 設定で作成します',
     tooltipSecretAccessKey: 'R2 API シークレットキー、ブラウザにのみ保存され、アップロードされません',
     tooltipBucket: 'R2 バケット名、すべてのファイル操作はこのバケットで実行されます',
