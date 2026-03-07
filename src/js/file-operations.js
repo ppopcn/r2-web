@@ -1,6 +1,5 @@
 import { IMAGE_RE } from './constants.js'
 import { t } from './i18n.js'
-import { ConfigManager } from './config-manager.js'
 import { FileExplorer } from './file-explorer.js'
 import { R2Client } from './r2-client.js'
 import { UIManager } from './ui-manager.js'
@@ -13,15 +12,12 @@ class FileOperations {
   #ui
   /** @type {FileExplorer} */
   #explorer
-  /** @type {ConfigManager} */
-  #config
 
-  /** @param {R2Client} r2 @param {UIManager} ui @param {FileExplorer} explorer @param {ConfigManager} config */
-  constructor(r2, ui, explorer, config) {
+  /** @param {R2Client} r2 @param {UIManager} ui @param {FileExplorer} explorer */
+  constructor(r2, ui, explorer) {
     this.#r2 = r2
     this.#ui = ui
     this.#explorer = explorer
-    this.#config = config
   }
 
   /** @param {string} key @param {boolean} isFolder */
@@ -57,6 +53,7 @@ class FileOperations {
         await this.#r2.deleteObject(key)
       }
       this.#ui.toast(t('renameSuccess', { name: newName }), 'success')
+      if (isFolder) this.#explorer.invalidateCache(key)
       await this.#explorer.refresh()
     } catch (/** @type {any} */ err) {
       const errorKey = getErrorMessage(err)
@@ -105,7 +102,10 @@ class FileOperations {
         await this.#r2.copyObject(key, dest)
       }
       this.#ui.toast(t('copySuccess', { name: dest }), 'success')
-      await this.#explorer.refresh()
+      const destPrefix = dest.substring(0, dest.lastIndexOf('/') + 1)
+      if (isFolder) this.#explorer.invalidateCache()
+      else this.#explorer.invalidateCache(destPrefix)
+      if (destPrefix.startsWith(this.#explorer.currentPrefix)) await this.#explorer.refresh()
     } catch (/** @type {any} */ err) {
       const errorKey = getErrorMessage(err)
       if (errorKey === 'networkError') {
@@ -156,6 +156,8 @@ class FileOperations {
         await this.#r2.deleteObject(key)
       }
       this.#ui.toast(t('moveSuccess', { name: dest }), 'success')
+      if (isFolder) this.#explorer.invalidateCache()
+      else this.#explorer.invalidateCache(dest.substring(0, dest.lastIndexOf('/') + 1))
       await this.#explorer.refresh()
     } catch (/** @type {any} */ err) {
       const errorKey = getErrorMessage(err)
@@ -193,6 +195,7 @@ class FileOperations {
         await this.#r2.deleteObject(key)
       }
       this.#ui.toast(t('deleteSuccess', { name }), 'success')
+      if (isFolder) this.#explorer.invalidateCache(key)
       await this.#explorer.refresh()
     } catch (/** @type {any} */ err) {
       const errorKey = getErrorMessage(err)

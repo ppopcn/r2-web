@@ -275,7 +275,7 @@ class App {
       this.#explorer = new FileExplorer(this.#r2, this.#ui)
       this.#upload = new UploadManager(this.#r2, this.#ui, this.#explorer, this.#config)
       this.#preview = new FilePreview(this.#r2, this.#ui)
-      this.#ops = new FileOperations(this.#r2, this.#ui, this.#explorer, this.#config)
+      this.#ops = new FileOperations(this.#r2, this.#ui, this.#explorer)
 
       this.#hideHero()
       $('#app').hidden = false
