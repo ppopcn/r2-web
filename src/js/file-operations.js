@@ -133,15 +133,11 @@ class FileOperations {
       validate: v => (resolveDest(v) === key ? t('moveSamePath') : null),
     })
 
-    console.log(key, isFolder, name,currentPrefix, destFolder)
-
     if (destFolder === null) return
 
     const dest = resolveDest(destFolder)
 
     if (dest === key) return
-
-    console.log('Moving', key, 'to', dest, 'isFolder:', isFolder)
 
     try {
       this.#ui.toast(t('moving', { name, destName: dest }), 'info')
@@ -151,7 +147,6 @@ class FileOperations {
           key,
           async (/** @type {string} */ srcKey) => {
             const relative = srcKey.substring(key.length)
-            console.log('Moving', srcKey, 'to', dest + relative)
             await this.#r2.copyObject(srcKey, dest + relative)
           },
           true,
