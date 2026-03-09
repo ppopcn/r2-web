@@ -6,7 +6,7 @@
 
 📁 轻盈优雅的 Web 原生 Cloudflare R2 文件管理器，一切皆在浏览器中完成。
 
-> 本项目被阮一峰大佬在 _[《科技爱好者周刊（第 387 期）》](https://www.ruanyifeng.com/blog/2026/03/weekly-issue-387.html)_ 中推荐，在此表示感谢！
+> 本项目被阮一峰大佬在 _[《科技爱好者周刊（第 387 期）》][ruanyifeng-weekly]_ 中推荐，在此表示感谢！
 >
 > 同时也欢迎大家试用并提出宝贵意见，一起把这个工具做得更好用、更顺手！
 
@@ -16,7 +16,11 @@
 
 ## 私有部署
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvikiboss%2Fr2-web&project-name=r2-web&repository-name=r2-web&demo-title=R2%20Web&demo-description=%F0%9F%93%81%20%E8%BD%BB%E7%9B%88%E4%BC%98%E9%9B%85%E7%9A%84%20Web%20%E5%8E%9F%E7%94%9F%20Cloudflare%20R2%20%E6%A1%B6%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8%EF%BC%8C%E4%B8%80%E5%88%87%E7%9A%86%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%AE%8C%E6%88%90%E3%80%82%20%7C%20%F0%9F%93%81%20A%20lightweight%2C%20elegant%2C%20pure-browser%20Cloudflare%20R2%20file%20manager.%20Everything%20happens%20right%20in%20your%20browser.&demo-url=https%3A%2F%2Fr2.viki.moe)
+| 平台             | 快速部署                                                                                   |
+| ---------------- | ------------------------------------------------------------------------------------------ |
+| Vercel           | [![Deploy with Vercel](https://vercel.com/button)][vercel-deploy]                          |
+| Netlify          | [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)][netlify-deploy]      |
+| Cloudflare Pages | [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)][cloudflare-deploy] |
 
 ## 反馈途径
 
@@ -200,3 +204,8 @@ A: 检查 CORS 配置是否正确、凭证是否有效、文件是否超过 300M
 ## License
 
 MIT License
+
+[ruanyifeng-weekly]: https://www.ruanyifeng.com/blog/2026/03/weekly-issue-387.html
+[vercel-deploy]: https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvikiboss%2Fr2-web&project-name=r2-web&repository-name=r2-web
+[netlify-deploy]: https://app.netlify.com/start/deploy?repository=https%3A%2F%2Fgithub.com%2Fvikiboss%2Fr2-web&integrationName=r2-web&integrationSlug=r2-web
+[cloudflare-deploy]: https://deploy.workers.cloudflare.com/?url=https%3A%2F%2Fgithub.com%2Fvikiboss%2Fr2-web

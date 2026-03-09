@@ -6,9 +6,21 @@
 
 📁 A lightweight, elegant, pure-browser Cloudflare R2 file manager. Everything happens right in your browser.
 
+> This project was recommended by Ruanyifeng in _[Tech Enthusiast Weekly (Issue 387)][ruanyifeng-weekly]_, many thanks for the support!
+>
+> Also welcome everyone to try it out and provide valuable feedback to make this tool even better and more user-friendly!
+
 ## Live Demo
 
 Follow the [CORS setup guide](#1-configure-r2-bucket-cors) below, then visit **[r2.viki.moe](https://r2.viki.moe)** to start managing your R2 bucket immediately.
+
+## Self-Hosting
+
+| Platform         | Quick Deploy                                                                               |
+| ---------------- | ------------------------------------------------------------------------------------------ |
+| Vercel           | [![Deploy with Vercel](https://vercel.com/button)][vercel-deploy]                          |
+| Netlify          | [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)][netlify-deploy]      |
+| Cloudflare Pages | [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)][cloudflare-deploy] |
 
 ## Feedback
 
@@ -190,3 +202,8 @@ This project was built with Claude Opus 4.6 via vibe coding — entirely prompt-
 ## License
 
 MIT License
+
+[ruanyifeng-weekly]: https://www.ruanyifeng.com/blog/2026/03/weekly-issue-387.html
+[vercel-deploy]: https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvikiboss%2Fr2-web&project-name=r2-web&repository-name=r2-web
+[netlify-deploy]: https://app.netlify.com/start/deploy?repository=https%3A%2F%2Fgithub.com%2Fvikiboss%2Fr2-web&integrationName=r2-web&integrationSlug=r2-web
+[cloudflare-deploy]: https://deploy.workers.cloudflare.com/?url=https%3A%2F%2Fgithub.com%2Fvikiboss%2Fr2-web
