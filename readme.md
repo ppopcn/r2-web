@@ -12,7 +12,7 @@
 
 ## 在线使用
 
-跟随下方指引 [开启 CORS](#1-配置-r2-桶-cors)，然后访问 **[r2.viki.moe](https://r2.viki.moe)** 立即开始管理 R2 桶。
+跟随 [下方指引](#1-配置-r2-桶-cors) 开启 CORS，然后访问 **[r2.viki.moe](https://r2.viki.moe)** 立即开始管理 R2 桶。
 
 ## 私有部署
 
@@ -24,7 +24,7 @@
 | Netlify          | [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)][netlify-deploy]      |
 | Cloudflare Pages | [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)][cloudflare-deploy] |
 
-当然，你也可以选择其他静态托管服务，将 `src` 目录下的文件部署到任何支持静态文件托管的平台（如 GitHub Pages、AWS S3、Firebase Hosting 等）。部署后别忘了去 R2 桶设置页面配置 CORS 规则，允许你的域名访问 R2 API。
+其他服务只需部署 `src` 目录即可，部署后记得更新 CORS 规则，允许你的域名访问 R2 API。
 
 ## 反馈途径
 
@@ -83,7 +83,7 @@
 | **文件上传** | 拖拽/粘贴/选择器上传<br>文件名模板（哈希、日期、UUID 等占位符）<br>上传前自动压缩图片（WebAssembly） |
 | **文件预览** | 图片预览（常见格式）<br>视频/音频内嵌播放器<br>文本文件预览（代码高亮）                              |
 | **链接复制** | URL 直链、Markdown、HTML、预签名 URL                                                                 |
-| **个性化**   | 中文/英语/日语<br>深色模式（跟随系统）<br>配置分享链接/二维码                                        |
+| **个性化**   | 简体/繁体/英语/日语<br>深色模式（跟随系统）<br>配置分享链接/二维码                                   |
 | **PWA**      | 安装到桌面，原生体验                                                                                 |
 
 ## 快速开始

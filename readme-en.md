@@ -24,7 +24,7 @@ Here are some common static hosting platforms for deployment. Click the buttons 
 | Netlify          | [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)][netlify-deploy]      |
 | Cloudflare Pages | [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)][cloudflare-deploy] |
 
-Of course, you can also choose other static hosting services and deploy the files in the `src` directory to any platform that supports static file hosting (like GitHub Pages, AWS S3, Firebase Hosting, etc.). After deployment, don't forget to configure the CORS rules in your R2 bucket settings page to allow your domain to access the R2 API.
+Other services can simply deploy the `src` directory. After deployment, remember to update your CORS rules to allow your domain to access the R2 API.
 
 ## Feedback
 
@@ -83,7 +83,7 @@ Of course, you can also choose other static hosting services and deploy the file
 | **File Upload**     | Drag / paste / picker upload<br>Filename templates (hash, date, UUID placeholders)<br>Auto image compression before upload (WebAssembly) |
 | **File Preview**    | Image preview (common formats)<br>Inline video / audio player<br>Text file preview with syntax highlighting                              |
 | **Link Copy**       | Direct URL, Markdown, HTML, pre-signed URL                                                                                               |
-| **Personalization** | Chinese / English / Japanese<br>Dark mode (follows system)<br>Config share link / QR code                                                |
+| **Personalization** | Simplified / Traditional Chinese, English, Japanese<br>Dark mode (follows system)<br>Config share link / QR code                         |
 | **PWA**             | Install to desktop, native-like experience                                                                                               |
 
 ## Quick Start
