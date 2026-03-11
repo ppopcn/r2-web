@@ -321,6 +321,8 @@ class UploadManager {
     const title = $('#upload-panel-title')
 
     body.innerHTML = ''
+    panel.hidden = false
+    title.textContent = t('uploadPreparing')
 
     const cfg = this.#config.get()
     const filenameTpl = cfg.filenameTpl || ''
