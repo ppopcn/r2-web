@@ -144,6 +144,7 @@ class App {
 
     $('#lbl-filename-tpl').textContent = t('filenameTpl')
     $('#lbl-filename-tpl-scope').textContent = t('filenameTplScope')
+    $('#lbl-upload-concurrency').textContent = t('uploadConcurrency')
     const filenameScopeSelect = $('#cfg-filename-tpl-scope')
     if (filenameScopeSelect) {
       $('option[value="images"]', filenameScopeSelect).textContent = t('filenameTplScopeImages')
@@ -475,6 +476,7 @@ class App {
     const compressModeInput = /** @type {HTMLSelectElement} */ ($('#cfg-compress-mode'))
     const compressLevelInput = /** @type {HTMLSelectElement} */ ($('#cfg-compress-level'))
     const tinifyKeyInput = /** @type {HTMLInputElement} */ ($('#cfg-tinify-key'))
+    const uploadConcurrencyInput = /** @type {HTMLSelectElement} */ ($('#cfg-upload-concurrency'))
 
     const currentTheme = localStorage.getItem(THEME_KEY) || 'auto'
     const savedLang = getCurrentLang()
@@ -496,6 +498,7 @@ class App {
     if (compressModeInput) compressModeInput.value = cfg.compressMode || 'none'
     if (compressLevelInput) compressLevelInput.value = cfg.compressLevel || 'balanced'
     if (tinifyKeyInput) tinifyKeyInput.value = cfg.tinifyKey || ''
+    if (uploadConcurrencyInput) uploadConcurrencyInput.value = String(cfg.uploadConcurrency ?? 3)
 
     const updateCompressVisibility = () => {
       const mode = compressModeInput ? compressModeInput.value : 'none'
@@ -558,6 +561,7 @@ class App {
         compressMode: compressModeInput ? compressModeInput.value : 'none',
         compressLevel: compressLevelInput ? compressLevelInput.value : 'balanced',
         tinifyKey: tinifyKeyInput ? tinifyKeyInput.value.trim() : '',
+        uploadConcurrency: uploadConcurrencyInput ? Number(uploadConcurrencyInput.value) : 3,
       })
 
       dialog.close()

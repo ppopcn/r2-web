@@ -25,9 +25,6 @@ async function compressFile(file, config, onStatus) {
   const allowCompress = COMPRESSIBLE_IMAGE_RE.test(file.name)
 
   if (!allowCompress || !config.compressMode || config.compressMode === 'none') {
-    if (config.compressMode && config.compressMode !== 'none' && !allowCompress) {
-      onStatus && onStatus(t('compressNotSupported'))
-    }
     return file
   }
 
@@ -145,6 +142,30 @@ async function compressFile(file, config, onStatus) {
   }
 
   return file
+}
+
+/**
+ * 并发限制执行异步任务，返回 PromiseSettledResult 数组
+ * @template T
+ * @param {Array<() => Promise<T>>} tasks
+ * @param {number} limit
+ * @returns {Promise<PromiseSettledResult<T>[]>}
+ */
+async function runWithConcurrency(tasks, limit) {
+  const results = /** @type {PromiseSettledResult<T>[]} */ (new Array(tasks.length))
+  let nextIndex = 0
+  const worker = async () => {
+    while (nextIndex < tasks.length) {
+      const i = nextIndex++
+      try {
+        results[i] = { status: 'fulfilled', value: await tasks[i]() }
+      } catch (e) {
+        results[i] = { status: 'rejected', reason: e }
+      }
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, tasks.length) }, worker))
+  return results
 }
 
 class UploadManager {
@@ -425,9 +446,9 @@ class UploadManager {
         const statusEl = $(`#${id}-status`)
         if (statusEl) statusEl.textContent = msg
       }
-      file = await compressFile(file, cfg, updateStatus)
+      updateStatus(t('uploadWaiting'))
 
-      uploads.push({ id, key, file, contentType })
+      uploads.push({ id, key, file, contentType, updateStatus })
     }
 
     // All files were skipped
@@ -443,21 +464,27 @@ class UploadManager {
     title.textContent = `${t('uploadProgress')} 0/${uploads.length}`
 
     let completed = 0
-    const results = await Promise.allSettled(
-      uploads.map((u) =>
-        this.#uploadSingleFile(u.id, u.key, u.file, u.contentType).then(
-          (result) => {
-            completed++
-            title.textContent = `${t('uploadProgress')} ${completed}/${uploads.length}`
-            return result
-          },
-          (error) => {
-            completed++
-            title.textContent = `${t('uploadProgress')} ${completed}/${uploads.length}`
-            throw error
-          },
-        ),
-      ),
+    const results = await runWithConcurrency(
+      uploads.map((u) => async () => {
+        let compressionStatus = ''
+        const compressed = await compressFile(u.file, cfg, (msg) => {
+          compressionStatus = msg
+          u.updateStatus(msg)
+        })
+        u.updateStatus(t('uploading'))
+        try {
+          const result = await this.#uploadSingleFile(u.id, u.key, compressed, u.contentType)
+          u.updateStatus(compressionStatus || filesize(compressed.size))
+          return result
+        } catch (e) {
+          u.updateStatus('')
+          throw e
+        } finally {
+          completed++
+          title.textContent = `${t('uploadProgress')} ${completed}/${uploads.length}`
+        }
+      }),
+      cfg.uploadConcurrency ?? 3,
     )
 
     const success = results.filter((r) => r.status === 'fulfilled').length

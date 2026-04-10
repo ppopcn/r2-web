@@ -38,6 +38,7 @@ const I18N = {
     pasteFilePathLabel: '保存路径',
     pasteFilesConfirmTitle: '粘贴文件上传',
     pasteFilesConfirmMsg: '检测到 {count} 个文件，是否上传到当前目录？',
+    uploadWaiting: '等待中...',
     uploading: '正在上传...',
     uploadPreparing: '准备中...',
     uploadProgress: '上传进度',
@@ -203,6 +204,7 @@ const I18N = {
     // Tab labels
     configTabPreferences: '偏好设置',
     configTabR2: 'R2 设置',
+    uploadConcurrency: '并发上传数',
     configTabUpload: '上传设置',
     configTabCompression: '压缩设置',
     configTabAbout: '关于',
@@ -282,6 +284,7 @@ const I18N = {
     pasteFilePathLabel: '保存路徑',
     pasteFilesConfirmTitle: '貼上檔案上傳',
     pasteFilesConfirmMsg: '檢測到 {count} 個檔案，是否上傳到當前目錄？',
+    uploadWaiting: '等待中……',
     uploading: '正在上傳……',
     uploadPreparing: '準備中……',
     uploadProgress: '上傳進度',
@@ -447,6 +450,7 @@ const I18N = {
     // Tab labels
     configTabPreferences: '偏好設置',
     configTabR2: 'R2 設置',
+    uploadConcurrency: '並發上傳數',
     configTabUpload: '上傳設置',
     configTabCompression: '壓縮設置',
     configTabAbout: '關於',
@@ -527,6 +531,7 @@ const I18N = {
     pasteFilePathLabel: 'Save path',
     pasteFilesConfirmTitle: 'Paste Files Upload',
     pasteFilesConfirmMsg: 'Detected {count} files. Upload to the current directory?',
+    uploadWaiting: 'Waiting...',
     uploading: 'Uploading...',
     uploadPreparing: 'Preparing...',
     uploadProgress: 'Upload Progress',
@@ -695,6 +700,7 @@ const I18N = {
     // Tab labels
     configTabPreferences: 'Preferences',
     configTabR2: 'R2 Config',
+    uploadConcurrency: 'Concurrency',
     configTabUpload: 'Upload',
     configTabCompression: 'Compression',
     configTabAbout: 'About',
@@ -778,6 +784,7 @@ const I18N = {
     pasteFilePathLabel: '保存パス',
     pasteFilesConfirmTitle: 'ファイルをアップロード',
     pasteFilesConfirmMsg: '{count} 個のファイルを検出しました。現在のディレクトリにアップロードしますか？',
+    uploadWaiting: '待機中...',
     uploading: 'アップロード中...',
     uploadPreparing: '準備中...',
     uploadProgress: 'アップロード進行状況',
@@ -946,6 +953,7 @@ const I18N = {
     // Tab labels
     configTabPreferences: '環境設定',
     configTabR2: 'R2 設定',
+    uploadConcurrency: '同時アップロード数',
     configTabUpload: 'アップロード',
     configTabCompression: '圧縮',
     configTabAbout: 'について',
