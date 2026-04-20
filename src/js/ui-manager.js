@@ -169,6 +169,7 @@ class UIManager {
     const copyImageBtn = $('#ctx-copy-image', menu)
     const copyImageSep = $('#ctx-sep-copy-image', menu)
     const fileSep = $('#ctx-sep-file', menu)
+    const editContentTypeBtn = /** @type {HTMLElement} */ ($('#ctx-edit-content-type', menu))
     previewBtn.hidden = isFolder
     downloadBtn.hidden = isFolder
     shareQrBtn.hidden = isFolder
@@ -180,6 +181,7 @@ class UIManager {
     copyHtmlBtn.hidden = !(isImage || isVideo || isAudio)
     copyImageBtn.hidden = !isImage
     copyImageSep.hidden = !isImage
+    editContentTypeBtn.hidden = isFolder
     fileSep.hidden = isFolder
 
     menu.style.left = x + 'px'

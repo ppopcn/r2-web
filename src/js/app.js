@@ -235,6 +235,7 @@ class App {
     $('[data-action="copyImage"] span').textContent = t('copyImage')
     $('[data-action="copyPresigned"] span').textContent = t('copyPresigned')
     $('[data-action="shareQr"] span').textContent = t('shareQr')
+    $('[data-action="editContentType"] span').textContent = t('editContentType')
     $('[data-action="rename"] span').textContent = t('rename')
     $('[data-action="copy"] span').textContent = t('copy')
     $('[data-action="move"] span').textContent = t('move')
@@ -727,6 +728,9 @@ class App {
           break
         case 'shareQr':
           /** @type {FileOperations} */ this.#ops.shareQr(key)
+          break
+        case 'editContentType':
+          /** @type {FileOperations} */ this.#ops.editContentType(key)
           break
         case 'rename':
           /** @type {FileOperations} */ this.#ops.rename(key, isFolder)

@@ -52,9 +52,15 @@ class FilePreview {
     dialog.showModal()
 
     try {
+      let realContentType = getMimeType(key)
+      try {
+        const head = await this.#r2.headObject(key)
+        if (head.contentType) realContentType = head.contentType
+      } catch {}
+
       const meta = {
         contentLength: item.size ?? 0,
-        contentType: getMimeType(key),
+        contentType: realContentType,
         lastModified: item.lastModified ? new Date(item.lastModified) : undefined,
       }
 

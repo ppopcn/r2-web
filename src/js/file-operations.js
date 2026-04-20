@@ -368,6 +368,37 @@ class FileOperations {
   }
 
   /** @param {string} key */
+  async editContentType(key) {
+    const name = extractFileName(key)
+    let currentType = ''
+    try {
+      const head = await this.#r2.headObject(key)
+      currentType = head.contentType ?? ''
+    } catch {}
+
+    const newType = await this.#ui.prompt(t('editContentTypeTitle'), t('editContentTypeLabel'), currentType, {
+      validate: (v) => {
+        if (v.trim() && !v.includes('/')) return t('editContentTypeInvalid')
+        return null
+      },
+    })
+    if (newType === null || newType.trim() === currentType.trim()) return
+
+    try {
+      this.#ui.toast(t('editingContentType', { name }), 'info')
+      await this.#r2.updateContentType(key, newType.trim())
+      this.#ui.toast(t('editContentTypeSuccess', { name, type: newType.trim() }), 'success')
+    } catch (/** @type {any} */ err) {
+      const errorKey = getErrorMessage(err)
+      if (errorKey === 'networkError') {
+        this.#ui.toast(t('networkError', { msg: err.message }), 'error')
+      } else {
+        this.#ui.toast(t(/** @type {any} */ (errorKey)), 'error')
+      }
+    }
+  }
+
+  /** @param {string} key */
   async download(key) {
     try {
       const url = await this.#r2.getDownloadUrl(key, extractFileName(key))

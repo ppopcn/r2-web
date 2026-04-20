@@ -99,7 +99,10 @@
   {
     "AllowedOrigins": ["https://r2.viki.moe"],
     "AllowedMethods": ["GET", "POST", "PUT", "DELETE", "HEAD"],
-    "AllowedHeaders": ["authorization", "content-type", "x-amz-content-sha256", "x-amz-date", "x-amz-copy-source"],
+    "AllowedHeaders": [
+      "authorization", "content-type",
+      "x-amz-content-sha256", "x-amz-date", "x-amz-copy-source", "x-amz-metadata-directive"
+    ],
     "MaxAgeSeconds": 86400
   }
 ]

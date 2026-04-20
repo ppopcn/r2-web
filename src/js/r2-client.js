@@ -179,6 +179,26 @@ class R2Client {
     }
   }
 
+  /** @param {string} key @param {string} contentType */
+  async updateContentType(key, contentType) {
+    const cfg = /** @type {ConfigManager} */ (this.#config).get()
+    const url = `${/** @type {ConfigManager} */ (this.#config).getBucketUrl()}/${encodeS3Key(key)}`
+    const res = await /** @type {AwsClient} */ (this.#client).fetch(url, {
+      method: 'PUT',
+      headers: {
+        'x-amz-copy-source': `/${cfg.bucket}/${encodeS3Key(key)}`,
+        'x-amz-metadata-directive': 'REPLACE',
+        'Content-Type': contentType,
+      },
+    })
+    if (!res.ok) {
+      if (res.status === 401) throw new Error('HTTP_401')
+      if (res.status === 403) throw new Error('HTTP_403')
+      if (res.status === 404) throw new Error('HTTP_404')
+      throw new Error(`HTTP ${res.status}`)
+    }
+  }
+
   /** @param {string} prefix */
   async createFolder(prefix) {
     const key = prefix.endsWith('/') ? prefix : prefix + '/'
